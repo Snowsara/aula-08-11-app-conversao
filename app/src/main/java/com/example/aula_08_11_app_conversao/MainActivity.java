@@ -46,10 +46,17 @@ public class MainActivity extends AppCompatActivity {
                 case "Real -> Dolar":
                     opcaoSelecionada = "BRL-USD";
                     break;
+                case "Real -> Iene":
+                    opcaoSelecionada = "BRL-JPY";
+                    break;
+                case "Real -> Peso":
+                    opcaoSelecionada = "BRL-ARS";
+                    break;
                 default:
                     break;
             }
         }));
+
 
         Button bt = findViewById(R.id.converter);
         bt.setOnClickListener(view -> converter());
@@ -78,7 +85,11 @@ public class MainActivity extends AppCompatActivity {
                     JsonObject jsonObject = JsonParser.parseString(result).getAsJsonObject();
                     if (jsonObject.has("BRLUSD")) {
                         currencyRate = gson.fromJson(jsonObject.get("BRLUSD"), CurrencyRate.class);
-                    } else {
+                    } else if (jsonObject.has("BRLJPY")) {
+                        currencyRate = gson.fromJson(jsonObject.get("BRLJPY"), CurrencyRate.class);
+                    } else if (jsonObject.has("BRLARS")) {
+                        currencyRate = gson.fromJson(jsonObject.get("BRLARS"), CurrencyRate.class);
+                } else {
                         Toast.makeText(getApplicationContext(), "Não foi possível encontrar o valor da moeda", Toast.LENGTH_SHORT).show();
                     }
 
@@ -101,7 +112,15 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
+
+
+
+
     }
+
+
+
+
 }
 
 
